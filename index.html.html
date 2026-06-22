@@ -1,0 +1,309 @@
+
+<div style="background:#0A1A2F;border-radius:12px;padding:14px 12px;font-family:Arial,sans-serif;color:#F4F7FB">
+<h2 class="sr-only">주식맥락 종목별 에너지 분석 대시보드 — 팔란티어 3기능 샘플</h2>
+<div id="root"></div>
+</div>
+<script>
+const D={bg:'#0A1A2F',panel:'#16304F',panel2:'#112942',gold:'#F0C040',white:'#F4F7FB',muted:'#8DA4C0',sub:'#C7D6EA',green:'#43D9A3',red:'#FF5C5C',blue:'#56ABFF'};
+const DAYS=['월 6/16','화 6/17','수 6/18','목 6/19','금 6/20'];
+const WEEKLY={
+'월 6/16':[
+  {name:'SK하이닉스',size:8000,fi:1200,chg:5.2,tag:'반도체'},
+  {name:'삼성전자',size:7000,fi:-1800,chg:3.1,tag:'반도체'},
+  {name:'HPSP',size:3500,fi:1500,chg:12.8,tag:'소부장'},
+  {name:'한미반도체',size:2800,fi:800,chg:9.5,tag:'소부장'},
+  {name:'삼성전기',size:1500,fi:4200,chg:8.3,tag:'전기전자'},
+  {name:'주성엔지',size:1200,fi:350,chg:7.2,tag:'소부장'},
+  {name:'SK스퀘어',size:1000,fi:280,chg:6.8,tag:'반도체'},
+  {name:'LG이노텍',size:900,fi:-150,chg:2.5,tag:'전기전자'},
+  {name:'현대차',size:800,fi:280,chg:0.8,tag:'자동차'},
+  {name:'NAVER',size:650,fi:120,chg:-1.2,tag:'IT'},
+  {name:'삼성SDI',size:500,fi:-90,chg:-1.8,tag:'2차전지'},
+  {name:'한화오션',size:420,fi:80,chg:1.2,tag:'조선'},
+],
+'화 6/17':[
+  {name:'SK하이닉스',size:15000,fi:4500,chg:8.8,tag:'반도체'},
+  {name:'삼성전자',size:11000,fi:-900,chg:5.5,tag:'반도체'},
+  {name:'삼성전기',size:3500,fi:8500,chg:15.2,tag:'전기전자'},
+  {name:'HPSP',size:4200,fi:2800,chg:18.5,tag:'소부장'},
+  {name:'한미반도체',size:3800,fi:1500,chg:13.2,tag:'소부장'},
+  {name:'SK스퀘어',size:3200,fi:850,chg:14.5,tag:'반도체'},
+  {name:'주성엔지',size:2500,fi:620,chg:11.3,tag:'소부장'},
+  {name:'LG이노텍',size:2100,fi:480,chg:7.2,tag:'전기전자'},
+  {name:'한화오션',size:1800,fi:1200,chg:5.8,tag:'조선'},
+  {name:'현대차',size:1500,fi:520,chg:1.8,tag:'자동차'},
+  {name:'NAVER',size:900,fi:-180,chg:-2.8,tag:'IT'},
+  {name:'삼성SDI',size:600,fi:-200,chg:-3.5,tag:'2차전지'},
+],
+'수 6/18':[
+  {name:'SK하이닉스',size:18000,fi:3800,chg:6.8,tag:'반도체'},
+  {name:'삼성전자',size:13000,fi:-4500,chg:3.8,tag:'반도체'},
+  {name:'삼성전기',size:4200,fi:9200,chg:18.5,tag:'전기전자'},
+  {name:'한화오션',size:5500,fi:12500,chg:8.8,tag:'조선'},
+  {name:'대우건설',size:4800,fi:3200,chg:4.8,tag:'건설'},
+  {name:'LIG디펜스',size:4200,fi:2800,chg:7.5,tag:'방산'},
+  {name:'HPSP',size:3800,fi:1200,chg:-7.2,tag:'소부장'},
+  {name:'한미반도체',size:2800,fi:-2200,chg:-11.8,tag:'소부장'},
+  {name:'SK스퀘어',size:3200,fi:950,chg:11.2,tag:'반도체'},
+  {name:'LS ELECTRIC',size:2200,fi:780,chg:11.5,tag:'전력기기'},
+  {name:'현대차',size:2800,fi:680,chg:1.5,tag:'자동차'},
+  {name:'LG이노텍',size:2400,fi:380,chg:4.8,tag:'전기전자'},
+],
+'목 6/19':[
+  {name:'SK하이닉스',size:13000,fi:2800,chg:2.8,tag:'반도체'},
+  {name:'삼성전자',size:10000,fi:-7200,chg:1.5,tag:'반도체'},
+  {name:'삼성전기',size:4700,fi:14800,chg:12.8,tag:'전기전자'},
+  {name:'SK이터닉스',size:6200,fi:820,chg:2.2,tag:'풍력'},
+  {name:'한화오션',size:5800,fi:8200,chg:7.2,tag:'조선'},
+  {name:'대우건설',size:4500,fi:2800,chg:-1.2,tag:'건설'},
+  {name:'LIG디펜스',size:4800,fi:3200,chg:4.8,tag:'방산'},
+  {name:'한미반도체',size:3200,fi:-3500,chg:-16.8,tag:'소부장'},
+  {name:'LS ELECTRIC',size:3200,fi:1100,chg:8.5,tag:'전력기기'},
+  {name:'두산에너빌',size:2800,fi:720,chg:4.8,tag:'에너지'},
+  {name:'현대차',size:2500,fi:620,chg:1.2,tag:'자동차'},
+  {name:'LG이노텍',size:2100,fi:-980,chg:-7.8,tag:'전기전자'},
+],
+'금 6/20':[
+  {name:'SK하이닉스',size:9500,fi:700,chg:2.9,tag:'반도체'},
+  {name:'삼성전자',size:5600,fi:-8995,chg:-2.3,tag:'반도체'},
+  {name:'삼성전기',size:1400,fi:2400,chg:3.2,tag:'전기전자'},
+  {name:'SK스퀘어',size:1000,fi:580,chg:3.1,tag:'반도체'},
+  {name:'HPSP',size:550,fi:-420,chg:-21.0,tag:'소부장'},
+  {name:'현대차',size:420,fi:1213,chg:2.0,tag:'자동차'},
+  {name:'LG이노텍',size:380,fi:-720,chg:-10.8,tag:'전기전자'},
+  {name:'SK이터닉스',size:280,fi:180,chg:0.0,tag:'풍력'},
+  {name:'대우건설',size:260,fi:820,chg:-2.8,tag:'건설'},
+  {name:'한화오션',size:250,fi:2536,chg:2.6,tag:'조선'},
+  {name:'LIG디펜스',size:220,fi:720,chg:10.2,tag:'방산'},
+  {name:'LS ELECTRIC',size:200,fi:680,chg:16.2,tag:'전력기기'},
+]};
+
+const INSIGHTS={
+'월 6/16':'반도체+소부장 동반 상승. 에너지 분산형 — 확신 단계 이전. 삼성전기 외국인 선취매 시작.',
+'화 6/17':'SK하이닉스 +8.8% 사상 최고가. 삼성전기 외국인 8,500억 대규모 유입. 에너지 급팽창.',
+'수 6/18':'이란 종전 MOU → 한화오션·대우건설·LIG디펜스 신규 진입. 수 중반이 로테이션 포착 타이밍.',
+'목 6/19':'삼성전기 외국인 1.48조 집중. SK이터닉스 풍력 규제 철회 수혜. 한미반도체 역행 -16.8%.',
+'금 6/20':'총 에너지 급감(차익실현). 삼성전자 외국인 -8,995억 대규모 매도. 교집합 생존: 삼성전기·한화오션.'
+};
+
+const US_NODES=[
+  {id:'wdc',label:'WDC',sub:'+41%',y:65},
+  {id:'mu',label:'MU',sub:'+17%',y:158},
+  {id:'arm',label:'ARM',sub:'+28%',y:251},
+  {id:'amat',label:'AMAT',sub:'+19%',y:344},
+  {id:'stx',label:'STX',sub:'+23%',y:430},
+];
+const KR_NODES=[
+  {id:'hynix',label:'SK하이닉스',sub:'+29%',fi:'+700억',neg:false,y:72},
+  {id:'selec',label:'삼성전기',sub:'+32%',fi:'+2,400억',neg:false,y:188},
+  {id:'hm',label:'한미반도체',sub:'-18%',fi:'-2,500억',neg:true,y:305},
+  {id:'hana',label:'한화오션',sub:'+13.9%',fi:'+2,536억',neg:false,y:405},
+];
+const EDGES=[
+  {from:'wdc',to:'hynix',str:0.9,label:'HBM 공급망'},
+  {from:'mu',to:'hynix',str:0.85,label:'DRAM 사이클'},
+  {from:'mu',to:'selec',str:0.72,label:'MLCC 탑재 급증'},
+  {from:'arm',to:'selec',str:0.65,label:'AI칩셋 연동'},
+  {from:'amat',to:'hm',str:0.55,label:'장비 공급망'},
+  {from:'stx',to:'hynix',str:0.7,label:'SSD 수요'},
+  {from:'wdc',to:'selec',str:0.42,label:'스토리지→MLCC'},
+];
+
+function layout(stocks,W,H){
+  const s=[...stocks].sort((a,b)=>b.size-a.size);
+  const tot=s.reduce((t,d)=>t+d.size,0);
+  let cum=0,br=0;
+  for(let i=0;i<s.length;i++){cum+=s[i].size;if(cum/tot>=0.55){br=i+1;break;}}
+  if(!br)br=Math.ceil(s.length/2);
+  const r1=s.slice(0,br),r2=s.slice(br);
+  const s1=r1.reduce((t,d)=>t+d.size,0),s2=r2.reduce((t,d)=>t+d.size,0);
+  const H1=H*(s1/tot);
+  const res=[];let x=0;
+  r1.forEach(d=>{const w=d.size/s1*W;res.push({...d,x,y:0,w:Math.max(2,w-2),h:Math.max(2,H1-2)});x+=w;});
+  x=0;r2.forEach(d=>{const w=d.size/s2*W;res.push({...d,x,y:H1,w:Math.max(2,w-2),h:Math.max(2,H-H1-2)});x+=w;});
+  return res;
+}
+const chgBg=c=>{if(c>=15)return'#780000';if(c>=8)return'#A31515';if(c>=3)return'#C03030';if(c>=0)return'#7A2020';if(c>=-5)return'#203060';if(c>=-12)return'#1A50A0';return'#0F1F70';};
+const fiBg=fi=>{if(fi>2000)return{b:'#083A25',s:'#43D9A3'};if(fi>300)return{b:'#0D4F35',s:'#2E8B57'};if(fi>-300)return{b:'#1A2A40',s:'#446688'};if(fi>-2000)return{b:'#4A1515',s:'#E05050'};return{b:'#6A0A0A',s:'#FF5C5C'};};
+const volFmt=s=>`${(s/1000).toFixed(1)}조`;
+const fiFmt=fi=>`${fi>=0?'+':''}${fi.toLocaleString()}억`;
+
+function tmap(stocks,mode,sel,onSel){
+  const W=660,H=340;
+  const lay=layout(stocks,W,H);
+  const rects=lay.map(item=>{
+    const fb=mode==='overlay'?fiBg(item.fi):null;
+    const bg=mode==='flow'?chgBg(item.chg):fb.b;
+    const str=sel===item.name?D.gold:(mode==='flow'?'#0A1020':fb.s);
+    const isSel=sel===item.name;
+    const sw=item.w>45&&item.h>27;
+    const sc=item.w>60&&item.h>47;
+    const sf=mode==='overlay'&&item.w>90&&item.h>67;
+    const fs=Math.min(13,item.w*0.145);
+    return `<g onclick="window.__sel('${item.name}')" style="cursor:pointer">
+      <rect x="${item.x+1}" y="${item.y+1}" width="${item.w}" height="${item.h}" fill="${bg}" stroke="${str}" stroke-width="${isSel?2.5:1}" rx="3"/>
+      ${sw?`<text x="${item.x+1+item.w/2}" y="${item.y+1+item.h/2-(sc?9:0)}" text-anchor="middle" fill="${D.white}" font-size="${fs}" font-weight="bold" pointer-events="none" font-family="Arial">${item.name}</text>`:''}
+      ${sc?`<text x="${item.x+1+item.w/2}" y="${item.y+1+item.h/2+9}" text-anchor="middle" fill="${item.chg>=0?'#FF9999':'#9999FF'}" font-size="${Math.min(11,fs*0.85)}" pointer-events="none" font-family="Arial">${item.chg>=0?'+':''}${item.chg}%</text>`:''}
+      ${sf?`<text x="${item.x+1+item.w/2}" y="${item.y+1+item.h/2+26}" text-anchor="middle" fill="${item.fi>=0?D.green:D.red}" font-size="${Math.min(10,fs*0.78)}" pointer-events="none" font-family="Arial">외국인 ${fiFmt(item.fi)}</text>`:''}
+    </g>`;
+  }).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">${rects}</svg>`;
+}
+
+function detailPanel(stock,stocks){
+  const total=stocks.reduce((t,d)=>t+d.size,0);
+  return `<div style="background:${D.panel};border-radius:10px;padding:10px 14px;border:2px solid ${D.gold};margin-top:8px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+      <span style="color:${D.gold};font-size:14px;font-weight:bold">${stock.name}</span>
+      <span style="background:${D.panel2};border-radius:4px;padding:2px 6px;color:${D.muted};font-size:10px">${stock.tag}</span>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      <div><div style="color:${D.muted};font-size:9px">거래대금(에너지)</div><div style="color:${D.gold};font-size:16px;font-weight:bold">${volFmt(stock.size)}</div></div>
+      <div><div style="color:${D.muted};font-size:9px">에너지 비중</div><div style="color:${D.sub};font-size:16px;font-weight:bold">${(stock.size/total*100).toFixed(1)}%</div></div>
+      <div><div style="color:${D.muted};font-size:9px">등락률</div><div style="color:${stock.chg>=0?D.red:D.blue};font-size:16px;font-weight:bold">${stock.chg>=0?'+':''}${stock.chg}%</div></div>
+      <div><div style="color:${D.muted};font-size:9px">외국인 순매수</div><div style="color:${stock.fi>=0?D.green:D.red};font-size:16px;font-weight:bold">${fiFmt(stock.fi)}</div></div>
+    </div>
+  </div>`;
+}
+
+let state={tab:0,dayIdx:4,selFlow:null,selOverlay:null,hovGraph:null};
+
+function render(){
+  const {tab,dayIdx,selFlow,selOverlay,hovGraph}=state;
+  const tabs=[{l:'① 에너지 흐름',s:'Flow'},{l:'② 에너지×외국인',s:'Overlay'},{l:'③ 진원지→한국',s:'Graph'}];
+
+  const tabBar=tabs.map((t,i)=>`<button onclick="window.__tab(${i})" style="background:${tab===i?D.panel:'transparent'};border:1px solid ${tab===i?D.gold:D.panel};border-bottom:${tab===i?`1px solid ${D.panel}`:'none'};color:${tab===i?D.gold:D.muted};border-radius:6px 6px 0 0;padding:6px 11px;font-size:11px;cursor:pointer;margin-bottom:-1px;font-family:Arial">${t.l}</button>`).join('');
+
+  let content='';
+
+  if(tab===0){
+    const dayKey=DAYS[dayIdx];
+    const stocks=WEEKLY[dayKey];
+    const sorted=[...stocks].sort((a,b)=>b.size-a.size);
+    const total=stocks.reduce((t,d)=>t+d.size,0);
+    const top3=sorted.slice(0,3).reduce((t,d)=>t+d.size,0);
+    const daySel=DAYS.map((d,i)=>`<button onclick="window.__day(${i})" style="background:${dayIdx===i?D.panel:'transparent'};border:1px solid ${dayIdx===i?D.gold:D.panel};color:${dayIdx===i?D.gold:D.muted};border-radius:6px;padding:4px 9px;font-size:11px;cursor:pointer;font-family:Arial">${d}</button>`).join('');
+    const legend=[{c:'#780000',l:'상한가↑'},{c:'#A31515',l:'+8%↑'},{c:'#C03030',l:'+3%↑'},{c:'#7A2020',l:'0~+3%'},{c:'#203060',l:'0~-5%'},{c:'#1A50A0',l:'-5%↓'},{c:'#0F1F70',l:'-12%↓'}].map(({c,l})=>`<div style="display:flex;align-items:center;gap:3px"><div style="width:11px;height:11px;background:${c};border-radius:2px"></div><span>${l}</span></div>`).join('');
+    const detail=selFlow?detailPanel(stocks.find(s=>s.name===selFlow),stocks):'';
+    content=`
+      <div style="display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap;align-items:center">
+        <span style="color:${D.muted};font-size:11px">날짜 선택:</span>${daySel}
+      </div>
+      <div style="background:${D.panel2};border-radius:8px;padding:8px 12px;margin-bottom:10px;border-left:3px solid ${D.gold};font-size:11px;color:${D.sub};line-height:1.7">
+        <b style="color:${D.gold}">에너지 흐름 (Flow)</b> — 블록 크기=거래대금(에너지), 색상=등락률 (한국식: 빨강↑ 파랑↓) · 종목 클릭 시 상세<br>${INSIGHTS[dayKey]}
+      </div>
+      <div style="background:${D.panel2};border-radius:10px;padding:8px;margin-bottom:8px">${tmap(stocks,'flow',selFlow,'flow')}</div>
+      <div style="display:flex;gap:5px;margin-bottom:8px;flex-wrap:wrap;font-size:9px;color:${D.muted}">${legend}</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
+        <div style="background:${D.panel};border-radius:8px;padding:8px 12px;flex:1;min-width:90px"><div style="color:${D.muted};font-size:9px;margin-bottom:2px">총 거래대금</div><div style="color:${D.gold};font-size:15px;font-weight:bold">${volFmt(total)}</div></div>
+        <div style="background:${D.panel};border-radius:8px;padding:8px 12px;flex:1;min-width:90px"><div style="color:${D.muted};font-size:9px;margin-bottom:2px">에너지 1위</div><div style="color:${D.white};font-size:15px;font-weight:bold">${sorted[0]?.name}</div></div>
+        <div style="background:${D.panel};border-radius:8px;padding:8px 12px;flex:1;min-width:90px"><div style="color:${D.muted};font-size:9px;margin-bottom:2px">TOP3 집중도</div><div style="color:${D.sub};font-size:15px;font-weight:bold">${(top3/total*100).toFixed(0)}%</div></div>
+      </div>
+      ${detail}`;
+  }
+
+  if(tab===1){
+    const stocks=WEEKLY['금 6/20'];
+    const maxVol=Math.max(...stocks.map(s=>s.size));
+    const inter=[...stocks].filter(s=>s.size>maxVol*0.05&&s.fi>300).sort((a,b)=>b.fi-a.fi);
+    const quiet=[...stocks].filter(s=>s.size<=maxVol*0.05&&s.fi>1500).sort((a,b)=>b.fi-a.fi);
+    const legend2=[{b:'#083A25',s:'#43D9A3',l:'강매수 +2,000억↑'},{b:'#0D4F35',s:'#2E8B57',l:'매수 +300~2,000억'},{b:'#1A2A40',s:'#446688',l:'중립 ±300억'},{b:'#4A1515',s:'#E05050',l:'매도 -300~-2,000억'},{b:'#6A0A0A',s:'#FF5C5C',l:'강매도 -2,000억↓'}].map(({b,s,l})=>`<div style="display:flex;align-items:center;gap:4px;background:${D.panel2};border-radius:5px;padding:3px 7px;border:1px solid ${s}"><div style="width:10px;height:10px;background:${b};border:1px solid ${s};border-radius:2px"></div><span style="color:${D.muted};font-size:9px">${l}</span></div>`).join('');
+    const interCards=inter.map(s=>`<div onclick="window.__ov('${s.name}')" style="background:${D.panel2};border-radius:8px;padding:7px 11px;border:1px solid ${D.green};cursor:pointer"><div style="color:${D.white};font-weight:bold;font-size:12px">${s.name}</div><div style="color:${D.green};font-size:10px">에너지 ${volFmt(s.size)} · 외국인 ${fiFmt(s.fi)}</div></div>`).join('');
+    const quietCards=quiet.map(s=>`<div onclick="window.__ov('${s.name}')" style="background:${D.panel2};border-radius:8px;padding:7px 11px;border:1px dashed #2E8B57;cursor:pointer"><div style="color:${D.white};font-weight:bold;font-size:12px">${s.name}</div><div style="color:#2E8B57;font-size:10px">에너지 ${volFmt(s.size)} · 외국인 ${fiFmt(s.fi)}</div></div>`).join('');
+    const detail=selOverlay?detailPanel(stocks.find(s=>s.name===selOverlay),stocks):'';
+    content=`
+      <div style="background:${D.panel2};border-radius:8px;padding:8px 12px;margin-bottom:10px;border-left:3px solid ${D.green};font-size:11px;color:${D.sub};line-height:1.7">
+        <b style="color:${D.green}">에너지 × 외국인 교집합 (Overlay)</b> — 블록 크기=거래대금, 색상=외국인 순매수 절대금액 · 금 6/20 기준<br>에너지(크기)와 외국인 매수(색상)가 동시에 강한 종목 = 진짜 주도주
+      </div>
+      <div style="display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap">${legend2}</div>
+      <div style="background:${D.panel2};border-radius:10px;padding:8px;margin-bottom:10px">${tmap(stocks,'overlay',selOverlay,'overlay')}</div>
+      <div style="background:${D.panel};border-radius:10px;padding:10px 14px;margin-bottom:8px;border:2px solid ${D.green}">
+        <div style="color:${D.green};font-weight:bold;font-size:12px;margin-bottom:8px">★ 교집합 — 에너지 상위 + 외국인 매수 동시 포착 = 진짜 주도주</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">${interCards}</div>
+      </div>
+      ${quiet.length?`<div style="background:${D.panel};border-radius:10px;padding:10px 14px;margin-bottom:8px;border:1px solid #2E8B57">
+        <div style="color:#2E8B57;font-weight:bold;font-size:12px;margin-bottom:8px">에너지 小 + 외국인 강매수 = 조용히 쌓는 종목 (숨은 교집합)</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">${quietCards}</div>
+      </div>`:''}
+      ${detail}`;
+  }
+
+  if(tab===2){
+    const W=660,H=500,UX=55,UW=100,UH=46,KX=455,KW=162,KH=56;
+    const edges=EDGES.map(e=>{
+      const fn=US_NODES.find(n=>n.id===e.from),tn=KR_NODES.find(n=>n.id===e.to);
+      if(!fn||!tn)return'';
+      const x1=UX+UW,y1=fn.y+UH/2,x2=KX,y2=tn.y+KH/2;
+      const isH=hovGraph===e.from||hovGraph===e.to;
+      const sw=Math.max(1.5,e.str*7);
+      const midX=(x1+x2)/2,midY=(y1+y2)/2;
+      return`<g>
+        <path d="M${x1},${y1} C${x1+110},${y1} ${x2-110},${y2} ${x2},${y2}" fill="none" stroke="${isH?D.gold:'rgba(240,192,64,0.35)'}" stroke-width="${isH?sw+1:sw}" opacity="${isH?1:0.5}" stroke-linecap="round"/>
+        ${isH?`<rect x="${midX-62}" y="${midY-12}" width="124" height="20" rx="5" fill="${D.panel2}" stroke="${D.gold}" stroke-width="0.8"/><text x="${midX}" y="${midY+2}" text-anchor="middle" fill="${D.gold}" font-size="10" font-weight="bold" font-family="Arial">${e.label}</text>`:''}
+      </g>`;
+    }).join('');
+    const unodes=US_NODES.map(n=>{
+      const isH=hovGraph===n.id;
+      return`<g onmouseenter="window.__hov('${n.id}')" onmouseleave="window.__hov(null)" style="cursor:pointer">
+        <rect x="${UX}" y="${n.y}" width="${UW}" height="${UH}" rx="8" fill="${isH?'#1A3F6A':D.panel2}" stroke="${isH?D.gold:D.blue}" stroke-width="${isH?2:1}"/>
+        <text x="${UX+UW/2}" y="${n.y+18}" text-anchor="middle" fill="${D.white}" font-size="16" font-weight="bold" font-family="Arial">${n.label}</text>
+        <text x="${UX+UW/2}" y="${n.y+34}" text-anchor="middle" fill="${D.red}" font-size="12" font-family="Arial">${n.sub}</text>
+      </g>`;
+    }).join('');
+    const knodes=KR_NODES.map(n=>{
+      const isH=hovGraph===n.id;
+      return`<g onmouseenter="window.__hov('${n.id}')" onmouseleave="window.__hov(null)" style="cursor:pointer">
+        <rect x="${KX}" y="${n.y}" width="${KW}" height="${KH}" rx="8" fill="${isH?(n.neg?'#3A0A0A':'#0D3A25'):D.panel2}" stroke="${isH?D.gold:(n.neg?D.red:D.green)}" stroke-width="${isH?2:1}"/>
+        <text x="${KX+KW/2}" y="${n.y+19}" text-anchor="middle" fill="${D.white}" font-size="13" font-weight="bold" font-family="Arial">${n.label}</text>
+        <text x="${KX+KW/2}" y="${n.y+34}" text-anchor="middle" fill="${n.neg?D.blue:D.red}" font-size="11" font-family="Arial">${n.sub}</text>
+        <text x="${KX+KW/2}" y="${n.y+49}" text-anchor="middle" fill="${n.neg?D.red:D.green}" font-size="9" opacity="0.85" font-family="Arial">외국인 ${n.fi}</text>
+      </g>`;
+    }).join('');
+    content=`
+      <div style="background:${D.panel2};border-radius:8px;padding:8px 12px;margin-bottom:10px;border-left:3px solid ${D.blue};font-size:11px;color:${D.sub};line-height:1.7">
+        <b style="color:${D.blue}">진원지 → 한국 연결 (Object Graph)</b> — 미국 종목이 한국 종목으로 에너지를 어떻게 전이시키는지<br>선 굵기=연결 강도 · 종목 위에 마우스를 올리면 연결 경로와 관계 설명이 강조됩니다
+      </div>
+      <div style="background:${D.panel2};border-radius:10px;padding:8px;margin-bottom:10px">
+        <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">
+          <text x="${UX+UW/2}" y="28" text-anchor="middle" fill="${D.blue}" font-size="13" font-weight="bold" font-family="Arial">미국 진원지</text>
+          <text x="${UX+UW/2}" y="42" text-anchor="middle" fill="${D.muted}" font-size="9" font-family="Arial">주간 등락률</text>
+          <text x="${KX+KW/2}" y="28" text-anchor="middle" fill="${D.green}" font-size="13" font-weight="bold" font-family="Arial">한국 수혜·연동주</text>
+          <text x="${KX+KW/2}" y="42" text-anchor="middle" fill="${D.muted}" font-size="9" font-family="Arial">주간 · 외국인(주간)</text>
+          ${edges}${unodes}${knodes}
+          <text x="${W/2}" y="${H-8}" text-anchor="middle" fill="${D.muted}" font-size="9" font-family="Arial">선 굵기=연결 강도(공급망·수요 상관도) · hover → 경로 강조</text>
+        </svg>
+      </div>
+      <div style="background:${D.panel};border-radius:10px;padding:10px 14px;border:1px solid ${D.gold}">
+        <div style="color:${D.gold};font-weight:bold;font-size:12px;margin-bottom:6px">주식맥락 인사이트 — 진원지·에너지·외국인 연결 구조</div>
+        <div style="color:${D.sub};font-size:11px;line-height:1.9">
+          WDC·MU·STX 동반 급등 → <b style="color:${D.green}">SK하이닉스</b> HBM·DRAM 직결. 외국인 주간 +700억 (주 후반 차익실현으로 둔화)<br>
+          MU·ARM AI 수요 → <b style="color:${D.green}">삼성전기</b> MLCC 탑재 632% 폭증. 외국인 주간 +2,400억 → 이번 주 교집합 1위<br>
+          AMAT 장비 → <b style="color:${D.red}">한미반도체</b> 역행 -18% (단기 급등 해소, 수급 이탈 — 그래프의 음영 포인트)<br>
+          이란 종전 → <b style="color:${D.green}">한화오션</b>은 이 그래프 밖 별도 진원지(지정학). 에너지 小이지만 외국인 주간 +2,536억
+        </div>
+      </div>`;
+  }
+
+  document.getElementById('root').innerHTML=`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:8px;height:8px;border-radius:4px;background:${D.gold}"></div>
+      <span style="font-weight:bold;font-size:16px">주식맥락</span>
+      <span style="color:${D.muted};font-size:9px;letter-spacing:2px">STOCK CONTEXT</span>
+      <div style="flex:1"></div>
+      <span style="color:${D.gold};font-size:10px">6월 3주차 · 종목 에너지 분석 샘플</span>
+    </div>
+    <div style="display:flex;gap:4px;margin-bottom:12px;border-bottom:1px solid ${D.panel}">${tabBar}</div>
+    ${content}
+    <div style="text-align:center;margin-top:12px;color:${D.muted};font-size:9px;border-top:1px solid ${D.panel};padding-top:8px">
+      진원지·에너지·외국인으로 읽는다 · 샘플 데이터 (구조 검증용, 실제 수치와 상이할 수 있음)
+    </div>`;
+}
+
+window.__tab=i=>{state.tab=i;state.selFlow=null;state.selOverlay=null;render();};
+window.__day=i=>{state.dayIdx=i;state.selFlow=null;render();};
+window.__sel=name=>{state.selFlow=state.selFlow===name?null:name;render();};
+window.__ov=name=>{state.selOverlay=state.selOverlay===name?null:name;render();};
+window.__hov=id=>{state.hovGraph=id;render();};
+
+render();
+</script>
